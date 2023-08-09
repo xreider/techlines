@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "server": "node server/index.js"
+    "client": "npm run start --prefix client",
+    "server": "node server/index.js",
+    "app": "concurrently npm \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/xreider/techlines#readme",
   "dependencies": {
+    "concurrently": "^8.2.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongoose": "^7.4.2"
