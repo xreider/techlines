@@ -26,24 +26,26 @@ function ProductsScreen() {
   return (
     <Wrap spacing="30px" justify="center" minHeight="100vh">
       {loading ? (
-        <Stack direction="row" spacing={4} speed="0.65s" thickness="2px" emptyColor="gray.200" color="orange.500">
+        <Stack direction="row" spacing={4} speed="0.65s" thickness="2px" color="orange.500">
           <Spinner mt={20} thickness />
         </Stack>
-      ) : error ? (
+      ) : null}
+
+      {error ? (
         <Alert status="error">
           <AlertIcon />
           <AlertTitle>Sorry</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-      ) : (
-        products?.map?.((product) => (
-          <WrapItem key={product._id}>
-            <Center w="250px" h="550px">
-              <ProductCard product={product} />
-            </Center>
-          </WrapItem>
-        ))
-      )}
+      ) : null}
+
+      {products?.map?.((product) => (
+        <WrapItem key={product._id}>
+          <Center w="250px" h="550px">
+            <ProductCard product={product} />
+          </Center>
+        </WrapItem>
+      ))}
     </Wrap>
   );
 }
