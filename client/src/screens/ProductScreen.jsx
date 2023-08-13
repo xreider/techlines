@@ -39,7 +39,7 @@ const ProductScreen = () => {
 
   useEffect(() => {
     dispatch(getProduct(id));
-  }, [dispatch, id, cart]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     setAmount(cart?.find?.((e) => e.id === product?._id)?.qty || 1);
@@ -85,10 +85,10 @@ const ProductScreen = () => {
                     <Flex>
                       <HStack spacing="2px">
                         <StarIcon color="orange.500" />
-                        <StarIcon color={product.rating >= 2 ? 'orange:500' : 'gray.200'} />
-                        <StarIcon color={product.rating >= 3 ? 'orange:500' : 'gray.200'} />
-                        <StarIcon color={product.rating >= 4 ? 'orange:500' : 'gray.200'} />
-                        <StarIcon color={product.rating >= 5 ? 'orange:500' : 'gray.200'} />
+                        <StarIcon color={product.rating >= 2 ? 'orange.500' : 'gray.200'} />
+                        <StarIcon color={product.rating >= 3 ? 'orange.500' : 'gray.200'} />
+                        <StarIcon color={product.rating >= 4 ? 'orange.500' : 'gray.200'} />
+                        <StarIcon color={product.rating >= 5 ? 'orange.500' : 'gray.200'} />
                       </HStack>
                       <Text fontSize="md" fontWeight="bold" ml="4px">
                         {product.numberOfReviews}
@@ -151,10 +151,10 @@ const ProductScreen = () => {
                   <Box key={review._id}>
                     <Flex spacing="2px" alignItems="center">
                       <StarIcon color="orange.500" />
-                      <StarIcon color={review.rating >= 2 ? 'orange:500' : 'gray.200'} />
-                      <StarIcon color={review.rating >= 3 ? 'orange:500' : 'gray.200'} />
-                      <StarIcon color={review.rating >= 4 ? 'orange:500' : 'gray.200'} />
-                      <StarIcon color={review.rating >= 5 ? 'orange:500' : 'gray.200'} />
+                      <StarIcon color={review.rating >= 2 ? 'orange.500' : 'gray.200'} />
+                      <StarIcon color={review.rating >= 3 ? 'orange.500' : 'gray.200'} />
+                      <StarIcon color={review.rating >= 4 ? 'orange.500' : 'gray.200'} />
+                      <StarIcon color={review.rating >= 5 ? 'orange.500' : 'gray.200'} />
                       <Text fontWeight="semibold" ml="4px">
                         {review.title && review.title}
                       </Text>
