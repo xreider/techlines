@@ -11,10 +11,26 @@ import {
   Stack,
   useColorModeValue,
   useColorMode,
+  useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
 } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
-import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
+import {
+  HamburgerIcon,
+  CloseIcon,
+  MoonIcon,
+  SunIcon,
+  ChevronDownIcon,
+} from '@chakra-ui/icons';
 import { GiTechnoHeart } from 'react-icons/gi';
+import { CgProfile } from 'react-icons/cg';
+import { MdLocalShipping, MdLogout } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/actions/userActions.js';
 
 const links = [
   { linkName: 'Products', path: '/products' },
@@ -28,7 +44,10 @@ const NavLink = ({ path, children }) => (
     px={2}
     py={2}
     rounded={'md'}
-    _hover={{ textDecoration: 'none', bg: useColorModeValue('gray.200', 'gray.700') }}>
+    _hover={{
+      textDecoration: 'none',
+      bg: useColorModeValue('gray.200', 'gray.700'),
+    }}>
     {children}
   </Link>
 );
@@ -36,6 +55,19 @@ const NavLink = ({ path, children }) => (
 function Navbar() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const user = useSelector((state) => state.user);
+  const { userInfo } = user;
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const logoutHandler = () => {
+    dispatch(logout());
+    toast({
+      description: 'You have been logged out',
+      status: 'success',
+      isClosable: true,
+    });
+  };
+
   return (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
@@ -62,22 +94,63 @@ function Navbar() {
         </HStack>
         <Flex alignItems="center">
           <NavLink>
-            <Icon as={colorMode === 'light' ? MoonIcon : SunIcon} alignSelf="center" onClick={toggleColorMode} />
+            <Icon
+              as={colorMode === 'light' ? MoonIcon : SunIcon}
+              alignSelf="center"
+              onClick={toggleColorMode}
+            />
           </NavLink>
-          <Button as={ReactLink} to="/login" p={2} fontSize={'sm'} fontWeight={400} variant="link">
-            Sign In
-          </Button>
-          <Button
-            as={ReactLink}
-            to="/registration"
-            p={2}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            _hover={{ bg: 'orange.400' }}
-            bg="orange.200">
-            Sign Up
-          </Button>
+          {userInfo ? (
+            <>
+              <Menu>
+                <MenuButton px="4" py="2" transition="all 0.1s" as={Button}>
+                  {userInfo.name} <ChevronDownIcon />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem as={ReactLink} to="/profile">
+                    <CgProfile />
+                    <Text ml="2">Profile</Text>
+                  </MenuItem>
+                  <MenuItem as={ReactLink} to="/your-orders">
+                    <MdLocalShipping />
+                    <Text ml="2">Your orders</Text>
+                  </MenuItem>
+                  <MenuItem as={ReactLink} to="/cart">
+                    <MdLocalShipping />
+                    <Text ml="2">Shopping Cart</Text>
+                  </MenuItem>
+                  <MenuDivider />
+                  <MenuItem onClick={logoutHandler}>
+                    <MdLogout />
+                    <Text ml="2">Logout</Text>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <Button
+                as={ReactLink}
+                to="/login"
+                p={2}
+                fontSize={'sm'}
+                fontWeight={400}
+                variant="link">
+                Sign In
+              </Button>
+              <Button
+                as={ReactLink}
+                to="/registration"
+                p={2}
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                _hover={{ bg: 'orange.400' }}
+                bg="orange.200">
+                Sign Up
+              </Button>
+            </>
+          )}
         </Flex>
       </Flex>
       {isOpen ? (
@@ -88,9 +161,11 @@ function Navbar() {
                 {link.linkName}
               </NavLink>
             ))}
-            <NavLink key="sign up" path="/registration">
-              Sign Up
-            </NavLink>
+            {userInfo ? null : (
+              <NavLink key="sign up" path="/registration">
+                Sign Up
+              </NavLink>
+            )}
           </Stack>
         </Box>
       ) : null}

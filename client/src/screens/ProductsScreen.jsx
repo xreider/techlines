@@ -8,6 +8,7 @@ import {
   Stack,
   Wrap,
   WrapItem,
+  Toast,
 } from '@chakra-ui/react';
 import ProductCard from '../components/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +27,12 @@ function ProductsScreen() {
   return (
     <Wrap spacing="30px" justify="center" minHeight="100vh">
       {loading ? (
-        <Stack direction="row" spacing={4} speed="0.65s" thickness="2px" color="orange.500">
+        <Stack
+          direction="row"
+          spacing={4}
+          speed="0.65s"
+          thickness="2px"
+          color="orange.500">
           <Spinner mt={20} thickness />
         </Stack>
       ) : null}

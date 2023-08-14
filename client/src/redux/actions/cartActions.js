@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { cartItemAdd, setLoading, setError, cartItemRemoval } from '../slices/cart.js';
+import {
+  cartItemAdd,
+  setLoading,
+  setError,
+  cartItemRemoval,
+} from '../slices/cart.js';
 
 export const addCartItem = (id, qty) => async (dispatch) => {
   dispatch(setLoading(true));
@@ -17,10 +22,11 @@ export const addCartItem = (id, qty) => async (dispatch) => {
     dispatch(cartItemAdd(itemToAdd));
   } catch (error) {
     const err = error?.message
-      ? console.error(`getProducts error: ${error?.message}`)
+      ? console.error(`login error: ${error?.message}`) || error?.message
       : error?.response?.data?.message
-      ? console.error(`getProducts error: ${error?.response?.data?.message}`)
-      : console.error(JSON.stringify(error));
+      ? console.error(`login error: ${error?.response?.data?.message}`) ||
+        error?.response?.data?.message
+      : console.error(JSON.stringify(error)) || JSON.stringify(error);
     setError(err);
   }
 };
