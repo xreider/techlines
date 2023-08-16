@@ -31,10 +31,25 @@ import { CgProfile } from 'react-icons/cg';
 import { MdLocalShipping, MdLogout } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/actions/userActions.js';
+import { FiShoppingCart } from 'react-icons/fi';
+
+const ShoppingCartIcon = () => {
+  const cartInfo = useSelector((state) => state.cart);
+  const { cart } = cartInfo;
+  return (
+    <Flex>
+      <Text as="sub" fontSize="xs" fontStyle="italic">
+        {cart.length}
+      </Text>
+      <Icon as={FiShoppingCart} h="4" w="7" alignSelf="center" ml="-1" />
+      Cart
+    </Flex>
+  );
+};
 
 const links = [
   { linkName: 'Products', path: '/products' },
-  { linkName: 'ShoppingCart', path: '/cart' },
+  { linkName: <ShoppingCartIcon />, path: '/cart' },
 ];
 
 const NavLink = ({ path, children }) => (
@@ -117,7 +132,9 @@ function Navbar() {
                   </MenuItem>
                   <MenuItem as={ReactLink} to="/cart">
                     <MdLocalShipping />
-                    <Text ml="2">Shopping Cart</Text>
+                    <Text ml="2">
+                      <ShoppingCartIcon />
+                    </Text>
                   </MenuItem>
                   <MenuDivider />
                   <MenuItem onClick={logoutHandler}>

@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import LandingScreen from './screens/LandingScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/products/:id" element={<ProductScreen />}></Route>
             <Route path="/products" element={<ProductsScreen />}></Route>
             <Route path="/login" element={<LoginScreen />}></Route>
+            <Route path="/profile" element={<ProfileScreen />}></Route>
             <Route
               path="/registration"
               element={<RegistrationScreen />}></Route>
